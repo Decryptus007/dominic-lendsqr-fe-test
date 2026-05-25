@@ -1,0 +1,373 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.user-details {
+  font-family: v.$font-primary;
+
+  // ── Back Button ─────────────────────────────────────────────────────────
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    color: v.$color-text-main;
+    margin-bottom: 30px;
+    transition: color 0.2s ease;
+
+    i {
+      font-size: 14px;
+    }
+
+    &:hover {
+      color: v.$color-secondary;
+    }
+  }
+
+  // ── Page Header ──────────────────────────────────────────────────────────
+  &__page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  &__page-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: v.$color-secondary;
+    margin: 0;
+  }
+
+  &__page-actions {
+    display: flex;
+    gap: 20px;
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      width: 100%;
+      gap: 12px;
+    }
+  }
+
+  &__action-btn {
+    height: 40px;
+    padding: 0 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      flex: 1;
+    font-size: 12px;
+    }
+
+    &--blacklist {
+      border: 1px solid v.$color-danger;
+      color: v.$color-danger;
+
+      &:hover {
+        background-color: rgba(228, 3, 59, 0.05);
+      }
+    }
+
+    &--activate {
+      border: 1px solid v.$color-primary;
+      color: v.$color-primary;
+
+      &:hover {
+        background-color: rgba(57, 205, 204, 0.05);
+      }
+    }
+  }
+
+  // ── Profile Summary Card ─────────────────────────────────────────────────
+  &__profile-card {
+    background-color: v.$color-white;
+    border: 1px solid rgba(33, 63, 125, 0.06);
+    border-radius: 4px;
+    box-shadow: v.$shadow-md;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  &__profile-top {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 30px 32px;
+
+    @include m.respond-to(v.$breakpoint-desktop) {
+      gap: 24px;
+      padding: 30px 24px;
+    }
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 24px 20px;
+    }
+  }
+
+  &__profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  &__avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      width: 72px;
+      height: 72px;
+    }
+  }
+
+  &__identity-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__full-name {
+    font-size: 22px;
+    font-weight: 500;
+    color: v.$color-secondary;
+    margin: 0;
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      font-size: 18px;
+    }
+  }
+
+  &__account-id {
+    font-size: 14px;
+    color: v.$color-text-main;
+  }
+
+  &__profile-divider {
+    width: 1px;
+    height: 80px;
+    background-color: rgba(84, 95, 125, 0.2);
+    flex-shrink: 0;
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      display: none;
+    }
+  }
+
+  &__tier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  &__tier-label {
+    font-size: 12px;
+    color: v.$color-text-main;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  &__stars {
+    display: flex;
+    gap: 4px;
+
+    i {
+      font-size: 16px;
+      color: #e9b200;
+    }
+
+    .fa-regular {
+      color: rgba(84, 95, 125, 0.3);
+    }
+  }
+
+  &__balance {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__balance-amount {
+    font-size: 22px;
+    font-weight: 600;
+    color: v.$color-secondary;
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      font-size: 18px;
+    }
+  }
+
+  &__balance-bank {
+    font-size: 12px;
+    color: v.$color-text-main;
+  }
+
+  // ── Tabs ─────────────────────────────────────────────────────────────────
+  &__tabs {
+    display: flex;
+    border-top: 1px solid rgba(33, 63, 125, 0.1);
+    padding: 0 30px;
+    overflow-x: auto;
+    gap: 0;
+
+    // hide scrollbar
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      padding: 0 16px;
+    }
+  }
+
+  &__tab {
+    flex-shrink: 0;
+    padding: 20px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: v.$color-text-main;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      color: v.$color-secondary;
+    }
+
+    &--active {
+      color: v.$color-secondary;
+      font-weight: 500;
+      border-bottom-color: v.$color-primary;
+    }
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      font-size: 14px;
+      padding: 16px 12px;
+    }
+  }
+
+  // ── Content Card ─────────────────────────────────────────────────────────
+  &__content-card {
+    background-color: v.$color-white;
+    border: 1px solid rgba(33, 63, 125, 0.06);
+    border-radius: 4px;
+    box-shadow: v.$shadow-md;
+    padding: 40px 30px;
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      padding: 24px 20px;
+    }
+  }
+
+  // ── Sections ─────────────────────────────────────────────────────────────
+  &__section {
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__section-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: v.$color-secondary;
+    margin: 0 0 28px 0;
+  }
+
+  &__section-divider {
+    border: none;
+    border-top: 1px solid rgba(33, 63, 125, 0.1);
+    margin: 32px 0;
+  }
+
+  // ── Info Grid ────────────────────────────────────────────────────────────
+  &__info-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px 20px;
+
+    @include m.respond-to(v.$breakpoint-large) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @include m.respond-to(v.$breakpoint-desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px 16px;
+    }
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  // ── Placeholder (empty states) ───────────────────────────────────────────
+  &__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 16px;
+    color: v.$color-text-main;
+
+    i {
+      font-size: 48px;
+      opacity: 0.3;
+    }
+
+    p {
+      font-size: 14px;
+      margin: 0;
+      opacity: 0.6;
+    }
+  }
+}
+
+// ── Info Item Atom ────────────────────────────────────────────────────────────
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__label {
+    font-size: 12px;
+    font-weight: 400;
+    color: v.$color-text-main;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__value {
+    font-size: 16px;
+    font-weight: 500;
+    color: v.$color-secondary;
+    word-break: break-word;
+  }
+}

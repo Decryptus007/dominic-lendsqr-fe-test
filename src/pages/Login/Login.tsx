@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: navigate to dashboard
     console.log('Login submitted', { email, password });
+    navigate('/users');
   };
 
   return (

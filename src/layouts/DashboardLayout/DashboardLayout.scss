@@ -1,0 +1,36 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.dashboard-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: v.$color-bg-main;
+
+  &__main {
+    flex: 1;
+    margin-left: 283px;
+    padding-top: 80px;
+    transition: margin-left 0.3s ease;
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      margin-left: 0;
+      padding-top: 70px;
+    }
+  }
+
+  &__content {
+    padding: 60px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+
+    @include m.respond-to(v.$breakpoint-desktop) {
+      padding: 40px;
+    }
+
+    @include m.respond-to(v.$breakpoint-tablet) {
+      padding: 30px 16px;
+    }
+  }
+}
