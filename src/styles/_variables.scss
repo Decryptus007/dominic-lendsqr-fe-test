@@ -1,0 +1,29 @@
+// Typography
+$font-primary: 'Work Sans', system-ui, -apple-system, sans-serif; // dashboard
+$font-login: 'Avenir Next', system-ui, -apple-system, sans-serif; // login page
+
+// Colors
+$color-primary: #39cdcc;     // Lendsqr main teal color
+$color-secondary: #213f7d;   // Lendsqr navy blue color
+$color-dark: #1b202e;        // Very dark blue-gray
+$color-text-main: #545f7d;   // Soft gray-blue text
+$color-text-dark: #213f7d;
+$color-bg-main: #fbfbfb;     // Off-white background
+$color-white: #ffffff;
+$color-border: rgba(33, 63, 125, 0.1);
+
+// Status Colors
+$color-success: #39cd62;     // Active status green
+$color-warning: #e9b200;     // Pending status orange
+$color-danger: #e4033b;      // Blacklisted status red
+$color-inactive: #545f7d;   // Inactive status grey
+
+// Shadows
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+$shadow-md: 3px 5px 20px rgba(0, 0, 0, 0.04);
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-large: 1200px;
