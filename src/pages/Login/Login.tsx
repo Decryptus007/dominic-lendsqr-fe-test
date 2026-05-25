@@ -1,17 +1,35 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { login } from '../../services/authService';
 import './Login.scss';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // If the user was redirected here from a protected route, send them
+  // back there after login. Otherwise fall back to /users.
+  const from = (location.state as { from?: Location })?.from?.pathname ?? '/users';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted', { email, password });
-    navigate('/users');
+    setError('');
+    setIsLoading(true);
+
+    try {
+      await login(email, password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -38,7 +56,14 @@ const Login = () => {
           <h1 className="login-form__title">Welcome!</h1>
           <p className="login-form__subtitle">Enter details to login.</p>
 
-          <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="login-form__error" role="alert">
+              <i className="fa-solid fa-circle-exclamation" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} noValidate>
             {/* Email */}
             <div className="login-form__input-group">
               <input
@@ -49,6 +74,8 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                autoComplete="email"
+                disabled={isLoading}
               />
             </div>
 
@@ -62,11 +89,15 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                autoComplete="current-password"
+                disabled={isLoading}
               />
               <button
                 type="button"
                 className="login-form__toggle-pw"
                 onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                disabled={isLoading}
               >
                 {showPassword ? 'HIDE' : 'SHOW'}
               </button>
@@ -76,8 +107,19 @@ const Login = () => {
               FORGOT PASSWORD?
             </a>
 
-            <button type="submit" className="login-form__cta">
-              LOG IN
+            <button
+              type="submit"
+              className={`login-form__cta${isLoading ? ' login-form__cta--loading' : ''}`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <i className="fa-solid fa-circle-notch fa-spin" />
+                  <span>Logging in…</span>
+                </>
+              ) : (
+                'LOG IN'
+              )}
             </button>
           </form>
         </div>

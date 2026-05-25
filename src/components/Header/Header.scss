@@ -143,10 +143,25 @@
   }
 
   &__profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+    position: relative;
+
+    &-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+      color: inherit;
+      outline: none;
+
+      &:focus-visible {
+        outline: 2px solid v.$color-primary;
+        border-radius: 4px;
+      }
+    }
 
     &-avatar {
       width: 40px;
@@ -168,9 +183,68 @@
     &-caret {
       font-size: 12px;
       color: v.$color-secondary;
+      transition: transform 0.2s ease;
 
       @include m.respond-to(v.$breakpoint-tablet) {
         display: none;
+      }
+    }
+
+    &-dropdown {
+      position: absolute;
+      top: calc(100% + 15px);
+      right: 0;
+      background-color: v.$color-white;
+      border-radius: 8px;
+      box-shadow: v.$shadow-md, 0 10px 30px rgba(33, 63, 125, 0.08);
+      border: 1px solid rgba(33, 63, 125, 0.06);
+      min-width: 160px;
+      z-index: 200;
+      overflow: hidden;
+      padding: 6px 0;
+      animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+      @keyframes dropdownFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @include m.respond-to(v.$breakpoint-tablet) {
+        top: calc(100% + 12px);
+      }
+
+      &-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        background: none;
+        border: none;
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        text-align: left;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        i {
+          font-size: 15px;
+        }
+
+        &--logout {
+          color: v.$color-danger;
+
+          &:hover {
+            background-color: rgba(228, 3, 59, 0.06);
+          }
+        }
       }
     }
   }

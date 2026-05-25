@@ -28,11 +28,18 @@ The goal was not just to render the design but to demonstrate production-grade f
 
 ## Features
 
+### Authentication & Access Control
+
+- **Mock Authentication Layer** — Simulation of login and logout actions via `authService.ts` using local storage session persistence (automatically clears `lsqr_auth_token` and user cache `lendsqr_users` upon logout)
+- **Route Guarding** — Robust `PrivateRoute` and `PublicOnlyRoute` components to secure dashboard routes and prevent authenticated users from backtracking to the login screen
+- **Automatic Redirect** — Unauthenticated access to any dashboard path immediately redirects the user to `/login`, preserving their target route inside state to return them post-login
+- **Logout Confirmation Dialog** — Custom `ConfirmModal` wired up to both the Header profile dropdown and the Sidebar footer menu to prevent accidental sign-outs by prompting for confirmation before terminating sessions.
+
 ### Login Page
 
 - Form validation with inline error feedback
-- Loading indicator on submit
-- Redirect to dashboard on success
+- Loading indicator on submit with simulated API latency (800ms)
+- Redirect to dashboard (or target route) on success
 
 ### Users Page
 
@@ -42,7 +49,7 @@ The goal was not just to render the design but to demonstrate production-grade f
 - **Row actions dropdown** — View Details, Blacklist User, Activate User; with disabled state when action is already current
 - **Confirmation modal** — custom `ConfirmModal` component guards destructive/positive status changes
 - **Mobile accordion view** — on tablet/mobile, the table collapses into expandable cards (no horizontal scroll)
-- **2×2 compact stats grid** on mobile
+- **2×2 compact stats grid on mobile**
 
 ### User Details Page
 
@@ -184,6 +191,8 @@ pnpm test
 - [x] Fully mobile-responsive across all breakpoints
 - [x] Unit tests with positive and negative scenarios
 - [x] TypeScript strict mode — zero type errors
+- [x] Secured routes and mock authentication with automated redirect
+- [x] Beautiful profile dropdown and interactive logout confirmation dialog
 - [ ] Deployed to `https://dominic-lendsqr-fe-test.vercel.app`
 - [ ] Loom video review (≤ 3 minutes, face visible)
 - [ ] Decision document published (Google Docs / Notion)

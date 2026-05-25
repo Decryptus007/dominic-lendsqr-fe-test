@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import { logout } from '../../services/authService';
 import './Sidebar.scss';
 
 interface SidebarProps {
@@ -20,6 +22,7 @@ interface SidebarGroup {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const navigationGroups: SidebarGroup[] = [
     {
@@ -60,9 +63,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     },
   ];
 
-  const handleLogout = () => {
-    navigate('/login');
+  const handleLogoutClick = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    logout();
+    setIsLogoutModalOpen(false);
     onClose();
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -119,13 +128,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         {/* Footer Links */}
         <div className="sidebar__footer">
-          <button className="sidebar__link sidebar__link--logout" onClick={handleLogout}>
+          <button className="sidebar__link sidebar__link--logout" onClick={handleLogoutClick}>
             <i className="fa-solid fa-sign-out-alt"></i>
             <span>Logout</span>
           </button>
           <div className="sidebar__version">v1.0.0</div>
         </div>
       </aside>
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={isLogoutModalOpen}
+        title="Logout"
+        message="Are you sure you want to log out of your account?"
+        confirmText="Yes, Logout"
+        cancelText="Stay Logged In"
+        type="danger"
+        onConfirm={handleLogoutConfirm}
+        onClose={() => setIsLogoutModalOpen(false)}
+      />
     </>
   );
 };
