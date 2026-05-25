@@ -17,6 +17,7 @@ dist-ssr
 .env.*
 
 GUIDE.md
+scripts
 
 # Editor directories and files
 .vscode/*

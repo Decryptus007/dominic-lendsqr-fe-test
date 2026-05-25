@@ -70,8 +70,14 @@
       border: 1px solid v.$color-danger;
       color: v.$color-danger;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background-color: rgba(228, 3, 59, 0.05);
+      }
+
+      &.user-details__action-btn--current {
+        background-color: v.$color-danger;
+        color: v.$color-white;
+        border-color: v.$color-danger;
       }
     }
 
@@ -79,9 +85,21 @@
       border: 1px solid v.$color-primary;
       color: v.$color-primary;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background-color: rgba(57, 205, 204, 0.05);
       }
+
+      &.user-details__action-btn--current {
+        background-color: v.$color-primary;
+        color: v.$color-white;
+        border-color: v.$color-primary;
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.8;
+      pointer-events: none;
     }
   }
 

@@ -26,8 +26,9 @@
   }
 
   @include m.respond-to(v.$breakpoint-mobile) {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
   }
 
   &__card {
@@ -45,6 +46,11 @@
       transform: translateY(-2px);
       box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.06);
     }
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      padding: 16px 14px;
+      gap: 8px;
+    }
   }
 
   &__icon-wrap {
@@ -55,6 +61,12 @@
     align-items: center;
     justify-content: center;
     font-size: 16px;
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      width: 32px;
+      height: 32px;
+      font-size: 13px;
+    }
 
     &--users {
       background-color: rgba(223, 24, 255, 0.1);
@@ -82,12 +94,21 @@
     font-weight: 500;
     color: v.$color-text-main;
     letter-spacing: 0.05em;
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      font-size: 10px;
+      letter-spacing: 0.03em;
+    }
   }
 
   &__value {
     font-size: 24px;
     font-weight: 600;
     color: v.$color-secondary;
+
+    @include m.respond-to(v.$breakpoint-mobile) {
+      font-size: 18px;
+    }
   }
 }
 
@@ -104,6 +125,10 @@
 .users-table-scroll {
   overflow-x: auto;
   width: 100%;
+
+  @include m.respond-to(v.$breakpoint-tablet) {
+    display: none;
+  }
 
   // Custom horizontal scrollbar
   &::-webkit-scrollbar {
@@ -246,13 +271,17 @@
     color: v.$color-text-main;
     font-size: 14px;
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
 
     i {
       font-size: 14px;
       color: v.$color-text-main;
       width: 16px;
       text-align: center;
+      transition: color 0.2s;
     }
 
     &:hover {
@@ -262,6 +291,34 @@
       i {
         color: v.$color-secondary;
       }
+    }
+
+    &--danger {
+      &:hover {
+        background-color: rgba(228, 3, 59, 0.04);
+        color: v.$color-danger;
+
+        i {
+          color: v.$color-danger;
+        }
+      }
+    }
+
+    &--success {
+      &:hover {
+        background-color: rgba(57, 205, 98, 0.04);
+        color: v.$color-success;
+
+        i {
+          color: v.$color-success;
+        }
+      }
+    }
+
+    &--disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 }
@@ -338,6 +395,8 @@
   &__btn {
     flex: 1;
     height: 40px;
+    min-height: 40px;
+    padding: 0 14px;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
@@ -461,3 +520,236 @@
     }
   }
 }
+
+/* Skeleton Loading Animation */
+.users-table__skeleton {
+  height: 18px;
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+  background-size: 200% 100%;
+  animation: loading-skeleton-animation 1.5s infinite linear;
+  border-radius: 4px;
+  display: inline-block;
+
+  &--org { width: 80px; }
+  &--user { width: 100px; }
+  &--email { width: 150px; }
+  &--phone { width: 110px; }
+  &--date { width: 125px; }
+  &--status {
+    width: 70px;
+    height: 24px;
+    border-radius: 100px;
+  }
+}
+
+@keyframes loading-skeleton-animation {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Mobile Accordion Card View ── */
+.users-mobile-list {
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  margin-top: 5px;
+
+  @include m.respond-to(v.$breakpoint-tablet) {
+    display: flex;
+  }
+}
+
+.user-mobile-card {
+  background-color: v.$color-white;
+  border: 1px solid rgba(33, 63, 125, 0.08);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: v.$shadow-sm;
+  transition: all 0.2s ease-in-out;
+
+  &--expanded {
+    border-color: v.$color-primary;
+    box-shadow: v.$shadow-md;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__username {
+    font-size: 16px;
+    font-weight: 600;
+    color: v.$color-secondary;
+  }
+
+  &__org {
+    font-size: 12px;
+    color: v.$color-text-main;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  &__header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__toggle-icon {
+    font-size: 14px;
+    color: v.$color-secondary;
+    transition: transform 0.2s ease;
+  }
+
+  &__content {
+    margin-top: 16px;
+    border-top: 1px dashed rgba(33, 63, 125, 0.1);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  &__label {
+    font-weight: 600;
+    color: v.$color-text-main;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  &__value {
+    color: v.$color-secondary;
+    font-weight: 500;
+    word-break: break-all;
+    text-align: right;
+    max-width: 70%;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    border-top: 1px solid rgba(33, 63, 125, 0.06);
+    padding-top: 12px;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+  }
+
+  &__btn {
+    flex: 1;
+    height: 36px;
+    min-height: 36px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+    white-space: nowrap;
+
+    i {
+      font-size: 12px;
+    }
+
+    &--view {
+      border: 1px solid v.$color-primary;
+      color: v.$color-primary;
+
+      &:hover {
+        background-color: rgba(57, 205, 204, 0.05);
+      }
+    }
+
+    &--blacklist {
+      border: 1px solid v.$color-danger;
+      color: v.$color-danger;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(228, 3, 59, 0.05);
+      }
+
+      &:disabled {
+        background-color: v.$color-danger;
+        color: v.$color-white;
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    &--activate {
+      border: 1px solid v.$color-success;
+      color: v.$color-success;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(57, 205, 98, 0.05);
+      }
+
+      &:disabled {
+        background-color: v.$color-success;
+        color: v.$color-white;
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 30px;
+    color: v.$color-text-main;
+    font-size: 14px;
+    background-color: v.$color-white;
+    border: 1px solid rgba(33, 63, 125, 0.08);
+    border-radius: 8px;
+  }
+
+  // Skeletons
+  &--skeleton {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &__skeleton-title {
+    height: 16px;
+    width: 120px;
+    background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+    background-size: 200% 100%;
+    animation: loading-skeleton-animation 1.5s infinite linear;
+    border-radius: 4px;
+  }
+
+  &__skeleton-badge {
+    height: 24px;
+    width: 70px;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+    background-size: 200% 100%;
+    animation: loading-skeleton-animation 1.5s infinite linear;
+  }
+}
+
