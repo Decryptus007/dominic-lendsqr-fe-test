@@ -1,4 +1,4 @@
 // src/styles/main.scss
-@import 'variables';
-@import 'mixins';
-@import 'global';
+@use 'variables';
+@use 'mixins';
+@use 'global';
